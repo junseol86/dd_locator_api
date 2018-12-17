@@ -1,0 +1,74 @@
+﻿<Properties StartupConfiguration="{F80727B5-8319-4009-8B41-2C90917AA515}|">
+  <MonoDevelop.Ide.ItemProperties.DD__Locater__API PreferredExecutionTarget="MonoDevelop.Default" />
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench ActiveDocument="DD_Locater_API/Services/AssetDongRepository_S2.cs">
+    <Files>
+      <File FileName="DD_Locater_API/Models/AssetMarkV2.cs" Line="42" Column="13" />
+      <File FileName="DD_Locater_API/Models/AssetMark_S2.cs" Line="29" Column="52" />
+      <File FileName="DD_Locater_API/Services/AssetRepositoryV2.cs" Line="351" Column="29" />
+      <File FileName="DD_Locater_API/Utils/DBAuth.cs" Line="11" Column="63" />
+      <File FileName="DD_Locater_API/Controllers/Asset_S2_Controller.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Controllers/AssetList_S2_Controller.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Services/AssetRepository_S2.cs" Line="73" Column="30" />
+      <File FileName="DD_Locater_API/Services/AssetDongRepository_S2.cs" Line="86" Column="30" />
+      <File FileName="DD_Locater_API/Controllers/AssetDong_S2_Controller.cs" Line="21" Column="21" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="DD_Locater_API/Utils/DBAuth.cs">
+    <Files>
+      <File FileName="DD_Locater_API/Services/AssetRepository_S2.cs" Line="351" Column="75" />
+      <File FileName="DD_Locater_API/Utils/DBAuth.cs" Line="13" Column="6" />
+      <File FileName="DD_Locater_API/Models/Asset_S2_Down.cs" Line="33" Column="40" />
+      <File FileName="DD_Locater_API/Models/AssetDong_S2.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Services/AssetDongRepository_S2.cs" Line="94" Column="87" />
+      <File FileName="DD_Locater_API/Controllers/AssetList_S2_Controller.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Services/TraceRepository.cs" Line="92" Column="41" />
+      <File FileName="DD_Locater_API/Controllers/TraceController.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Controllers/UpDownloadController.cs" Line="50" Column="62" />
+      <File FileName="DD_Locater_API/Controllers/ValuesController.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Controllers/AssetListV2Controller.cs" Line="45" Column="35" />
+      <File FileName="DD_Locater_API/Services/PhoneNumberRepository.cs" Line="38" Column="56" />
+      <File FileName="DD_Locater_API/Controllers/UploadBuilding2Controller.cs" Line="157" Column="55" />
+      <File FileName="DD_Locater_API/Services/BuildingRepository2.cs" Line="511" Column="10" />
+      <File FileName="DD_Locater_API/Models/ImageUpload.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Utils/DBFuncs.cs" Line="15" Column="47" />
+      <File FileName="DD_Locater_API/Utils/CustomController.cs" Line="1" Column="1" />
+      <File FileName="DD_Locater_API/Services/AccountRepository.cs" Line="19" Column="43" />
+>>>>>>> 4f8aa1bedccc144d510e025999c4df05d1fb3e04
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DD_Locater_API" expanded="True">
+            <Node name="DD_Locater_API" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True" />
+<<<<<<< HEAD
+              <Node name="Services" expanded="True">
+                <Node name="AssetDongRepository_S2.cs" selected="True" />
+=======
+              <Node name="Services" expanded="True" />
+              <Node name="Utils" expanded="True">
+                <Node name="DBAuth.cs" selected="True" />
+>>>>>>> 4f8aa1bedccc144d510e025999c4df05d1fb3e04
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="DD_Locater_API" expanded="True" selected="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

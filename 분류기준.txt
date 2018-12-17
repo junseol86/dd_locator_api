@@ -1,0 +1,14 @@
+aka
+
+아파트 (주용도는 공동주택, 5층이상) MAIN_PURPS_CD_NM = '공동주택' AND GRND_FLR_CNT >= 5
+연립/다세대 (주용도는 공동주택, 5층미만) MAIN_PURPS_CD_NM = '공동주택' AND GRND_FLR_CNT >= 5
+오피스텔 (주용도와 기타용도에 오피스텔이라는 텍스트가 있으면) (MAIN_PURPS_CD_NM LIKE '%오피스텔%' OR ETC_PURPS LIKE '%오피스텔%')
+단독 (단독주택 중에서 다가구가 아닌 것) (MAIN_PURPS_CD_NM LIKE '%단독주택%' OR (ETC_PURPS LIKE '%단독%' AND ETC_PURPS LIKE '주택')) AND ETC_PURPS NOT LIKE '%다가구%'
+다가구 (단독주택, 가구수 1 초과인 것) (MAIN_PURPS_CD_NM LIKE '%단독주택%' OR (ETC_PURPS LIKE '%단독%' AND ETC_PURPS LIKE '주택')) AND ETC_PURPS LIKE '%다가구%'
+상업/업무용 (주용도는 1종근린 or 2종근린) (MAIN_PURPS_CD_NM LIKE '제1종근린%' OR MAIN_PURPS_CD_NM LIKE '제2종근린%')
+공장 (주용도: 공장) MAIN_PURPS_CD_NM = '공장'
+공장2 (주용도: 2종근린생활시설) MAIN_PURPS_CD_NM = '2종근린생활시설' AND
+창고 (주용도: 창고) MAIN_PURPS_CD_NM = '창고'
+
+토지
+분양/입주권

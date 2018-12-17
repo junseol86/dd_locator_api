@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<script>
+			cols = {
+			  "PLAT_PLC": "VARCHAR(40)",
+			  "SIGUNGU_CD": "VARCHAR(6)",
+			  "BJDONG_CD": "VARCHAR(6)",
+			  "PLAT_GB_CD": "VARCHAR(2)",
+			  "BUN": "VARCHAR(5)",
+			  "JI": "VARCHAR(5)",
+			  "MGM_BLDRGST_PK": "VARCHAR(20)",
+			  "REGSTR_GB_CD": "VARCHAR(2)",
+			  "REGSTR_GB_CD_NM": "VARCHAR(5)",
+			  "REGSTR_KIND_CD": "VARCHAR(2)",
+			  "REGSTR_KIND_CD_NM": "VARCHAR(10)",
+			  "NEW_PLAT_PLC": "VARCHAR(40)",
+			  "BLD_NM": "VARCHAR(40)",
+			  "SPLOT_NM": "VARCHAR(20)",
+			  "BLOCK": "VARCHAR(20)",
+			  "LOT": "VARCHAR(20)",
+			  "BYLOT_CNT": "INT",
+			  "NA_ROAD_CD": "VARCHAR(13)",
+			  "NA_BJDONG_CD": "VARCHAR(6)",
+			  "NA_UGRND_CD": "VARCHAR(2)",
+			  "NA_MAIN_BUN": "VARCHAR(5)",
+			  "NA_SUB_BUN": "VARCHAR(5)",
+			  "DONG_NM": "VARCHAR(20)",
+			  "MAIN_ATCH_GB_CD": "VARCHAR(2)",
+			  "MAIN_ATCH_GB_CD_NM": "VARCHAR(20)",
+			  "PLAT_AREA": "VARCHAR(20)",
+			  "ARCH_AREA": "VARCHAR(20)",
+			  "BC_RAT": "VARCHAR(10)",
+			  "TOTAREA": "VARCHAR(20)",
+			  "VL_RAT_ESTM_TOTAREA": "VARCHAR(20)",
+			  "VL_RAT": "VARCHAR(20)",
+			  "STRCT_CD": "VARCHAR(4)",
+			  "STRCT_CD_NM": "VARCHAR(20)",
+			  "ETC_STRCT": "VARCHAR(20)",
+			  "MAIN_PURPS_CD": "VARCHAR(6)",
+			  "MAIN_PURPS_CD_NM": "VARCHAR(20)",
+			  "ETC_PURPS": "VARCHAR(40)",
+			  "ROOF_CD": "VARCHAR(3)",
+			  "ROOF_CD_NM": "VARCHAR(20)",
+			  "ETC_ROOF": "VARCHAR(20)",
+			  "HHLD_CNT": "INT",
+			  "FMLY_CNT": "INT",
+			  "HEIT": "VARCHAR(10)",
+			  "GRND_FLR_CNT": "INT",
+			  "UGRND_FLR_CNT": "INT",
+			  "RIDE_USE_ELVT_CNT": "INT",
+			  "EMGEN_USE_ELVT_CNT": "INT",
+			  "ATCH_BLD_CNT": "INT",
+			  "ATCH_BLD_AREA": "VARCHAR(10)",
+			  "TOT_DONG_TOTAREA": "VARCHAR(10)",
+			  "INDR_MECH_AREA": "VARCHAR(10)",
+			  "INDR_MECH_UTCNT": "INT",
+			  "OUDR_MECH_AREA": "VARCHAR(10)",
+			  "OUDR_MECH_UTCNT": "INT",
+			  "INDR_AUTO_AREA": "VARCHAR(10)",
+			  "INDR_AUTO_UTCNT": "INT",
+			  "OUDR_AUTO_AREA": "VARCHAR(10)",
+			  "OUDR_AUTO_UTCNT": "INT",
+			  "PMS_DAY": "VARCHAR(9)",
+			  "STCNS_DAY": "VARCHAR(9)",
+			  "USEAPR_DAY": "VARCHAR(9)",
+			  "PMSNO_YEAR": "VARCHAR(5)",
+			  "PMSNO_KIK_CD": "VARCHAR(8)",
+			  "PMSNO_KIK_CD_NM": "VARCHAR(20)",
+			  "PMSNO_GB_CD": "VARCHAR(5)",
+			  "PMSNO_GB_CD_NM": "VARCHAR(20)",
+			  "HO_CNT": "INT",
+			  "ENGR_GRADE": "VARCHAR(2)",
+			  "ENGR_RAT": "VARCHAR(10)",
+			  "ENGR_EPI": "VARCHAR(10)",
+			  "GN_BLD_GRADE": "VARCHAR(2)",
+			  "GN_BLD_CERT": "VARCHAR(2)",
+			  "ITG_BLD_GRADE": "VARCHAR(2)",
+			  "ITG_BLD_CERT": "VARCHAR(10)",
+			  "CRTN_DAY": "VARCHAR(9)"
+			};
+
+			var inside = "";
+
+			// for (var prop in cols) {
+			// 	inside += prop + ' ' + cols[prop] + ', '
+			// }
+			for (var prop in cols) {
+				inside += "'{(string)datum[\"" + prop + "\"]}', ";
+			};
+
+			console.log(inside);
+
+
+		</script>
+	</head>
+</html>

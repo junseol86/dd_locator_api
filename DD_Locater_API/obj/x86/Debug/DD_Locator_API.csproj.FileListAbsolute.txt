@@ -1,0 +1,2 @@
+E:\GoogleCloud\Programming\ASP\DD_Locater_API\DD_Locater_API\obj\x86\Debug\DD_Locator_API.csprojResolveAssemblyReference.cache
+E:\GoogleCloud\Programming\ASP\DD_Locater_API\DD_Locater_API\obj\x86\Debug\DD_Locator_API.csproj.CoreCompileInputs.cache
