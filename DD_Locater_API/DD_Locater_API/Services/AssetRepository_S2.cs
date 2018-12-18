@@ -21,41 +21,14 @@ namespace DD_Locater_API.Services
 
             string condition = "";
 
-            switch (hasName)
-            {
-                case -1: condition += "AND (bld_name = '' OR bld_name = '(자동입력)') "; break;
-                case 1: condition += "AND bld_name != '' AND bld_name != '(자동입력)' "; break;
-            }
-            switch (hasNumber)
-            {
-                case -1: condition += "AND bld_tel_owner = '' "; break;
-                case 1: condition += "AND bld_tel_owner != '' "; break;
-            }
-            switch (hasGwan)
-            {
-                case -1: condition += "AND (bld_gwan = '' OR bld_gwan IS NULL) "; break;
-                case 1: condition += "AND bld_gwan != '' AND bld_gwan IS NOT NULL "; break;
-            }
+            condition = ConditionSetter.ByBldType(condition, bld_type);
+            condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
+            condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
+            condition = ConditionSetter.ByFactoryCount(condition, factory_count);
 
-            condition += bld_type == "ftrstr" ? " AND (bld_type LIKE 'FACTORY%' OR bld_type = 'str')"
-                : bld_type.Contains("FACTORY") ? $" AND bld_type = '{bld_type}'"
-                : bld_type == "ONEROOM" ? " AND (bld_type = 'ONEROOM' OR bld_type = 'ONEROOM_SU')"
-                : bld_type == "su" ? " AND (bld_type = 'su' OR bld_type = 'ONEROOM_SU')"
-                : bld_type == "OR_SU_BOTH" ? " AND (bld_type = 'ONEROOM' OR bld_type = 'su' OR bld_type = 'ONEROOM_SU')"
-                : $" AND bld_type LIKE '%{bld_type}%'";
-            condition += fmlyMin >= 0 ? $" AND fmly_cnt >= {fmlyMin} " : "";
-            condition += fmlyMax >= 0 ? $" AND fmly_cnt <= {fmlyMax} " : "";
             condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
             condition += useaprDay.Trim() != "" ? $" AND useapr_day >= '{useaprDay}'" : "";
             condition += visited <= -1 ? "" : $" AND visited = {visited}";
-            if (factory_count == 0)
-            {
-                condition += " AND visited = 1 AND factory_count = 0";
-            }
-            if (factory_count > 0)
-            {
-                condition += " AND visited = 1 AND factory_count > 0";
-            }
             if (doCode.Length > 0)
             {
                 condition += $" AND do_cd = {doCode}";
@@ -125,6 +98,83 @@ namespace DD_Locater_API.Services
             return new AssetAndCount_S2(result, count);
         }
 
+        public List<AssetMark_S2> AssetsInBoundMobile(string bld_ctgr, string bld_type, double left, double right, double top, double bottom,
+            Int64 hasName, Int64 hasNumber, Int64 hasGwan, Int64 fmlyMin, Int64 fmlyMax,
+            string mainPurps, string useaprDay, Int64 visited, Int64 factory_count)
+        {
+
+            List<AssetMark_S2> result = new List<AssetMark_S2>();
+
+            string condition = "";
+
+            condition = ConditionSetter.ByBldCtgr(condition, bld_ctgr);
+            condition = ConditionSetter.ByBldType(condition, bld_type);
+            condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
+            condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
+            condition = ConditionSetter.ByFactoryCount(condition, factory_count);
+
+            condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
+            condition += useaprDay.Trim() != "" ? $" AND useapr_day >= '{useaprDay}'" : "";
+            condition += visited <= -1 ? "" : $" AND visited = {visited}";
+
+            using (MySqlConnection conn = openCon())
+            {
+                string countQuery =
+                    $@"
+                        SELECT
+                            COUNT(*) count
+                        FROM 
+                            view_locatorforsearch
+                        WHERE
+                            TRUE
+                            {condition}
+                    ";
+
+            }
+
+            using (MySqlConnection conn = openCon())
+            {
+                string getAssetListQuery =
+                    $@"
+                        SELECT
+                            bld_idx, 
+                            bld_type, 
+                            bld_name, 
+                            geo_lng as bld_map_x, geo_lat as bld_map_y, 
+                            bld_ipkey, bld_roomkey, 
+                            bld_tel_owner,
+                            bld_on_wall,
+                            bld_on_parked,
+                            work_requested,
+                            work_request,
+                            visited,
+                            factory_count
+                        FROM 
+                            view_locatorforsearch
+                        WHERE
+                            geo_lng > '{left}'
+                            AND geo_lng < '{right}'
+                            AND geo_lat < '{top}'
+                            AND geo_lat > '{bottom}'
+                            {condition}
+                        ORDER BY
+                            geo_lat, modified ASC
+                    ";
+
+                System.Diagnostics.Debug.WriteLine(getAssetListQuery);
+
+                using (MySqlDataReader reader = exReader(getAssetListQuery, conn))
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new AssetMark_S2(reader));
+                    }
+                }
+            }
+            return result;
+        }
+
+
         public List<Asset_S2_Down> AssetsRequested(string bld_type, 
             Int64 hasName, Int64 hasNumber, Int64 hasGwan, Int64 fmlyMin, Int64 fmlyMax, string mainPurps, string useaprDay, string bldName, string bldMemo, Int64 visited, Int64 factory_count, string doCode)
         {
@@ -135,46 +185,14 @@ namespace DD_Locater_API.Services
 
                 string condition = "";
 
-                condition += bld_type == "ftrstr" ? " AND (bld_type LIKE 'FACTORY%' OR bld_type = 'str')"
-                    : bld_type.Contains("FACTORY") ? $" AND bld_type = '{bld_type}'"
-                    : bld_type == "ONEROOM" ? " AND (bld_type = 'ONEROOM' OR bld_type = 'ONEROOM_SU')"
-                    : bld_type == "su" ? " AND (bld_type = 'su' OR bld_type = 'ONEROOM_SU')"
-                    : bld_type == "OR_SU_BOTH" ? " AND (bld_type = 'ONEROOM' OR bld_type = 'su' OR bld_type = 'ONEROOM_SU')"
-                    : $" AND bld_type LIKE '%{bld_type}%'";
+                condition = ConditionSetter.ByBldType(condition, bld_type);
+                condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
+                condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
+                condition = ConditionSetter.ByFactoryCount(condition, factory_count);
 
-                switch (hasName)
-                {
-                    case -1: condition += "AND (bld_name = '' OR bld_name = '(자동입력)') "; break;
-                    case 1: condition += "AND bld_name != '' AND bld_name != '(자동입력)' "; break;
-                }
-                switch (hasNumber)
-                {
-                    case -1: condition += "AND bld_tel_owner = '' "; break;
-                    case 1: condition += "AND bld_tel_owner != '' "; break;
-                }
-                switch (hasGwan)
-                {
-                    case -1: condition += "AND (bld_gwan = '' OR bld_gwan IS NULL) "; break;
-                    case 1: condition += "AND bld_gwan != '' AND bld_gwan IS NOT NULL "; break;
-                }
-
-                condition += fmlyMin >= 0 ? $" AND fmly_cnt >= {fmlyMin} " : "";
-                condition += fmlyMax >= 0 ? $" AND fmly_cnt <= {fmlyMax} " : "";
                 condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
                 condition += useaprDay.Trim() != "" ? $" AND useapr_day >= '{useaprDay}'" : "";
                 condition += visited <= -1 ? "" : $" AND visited = {visited}";
-                if (factory_count == 0)
-                {
-                    condition += " AND visited = 1 AND factory_count = 0";
-                }
-                if (factory_count > 0)
-                {
-                    condition += " AND visited = 1 AND factory_count > 0";
-                }
-                if (doCode.Length > 0)
-                {
-                    condition += $" AND do_cd = {doCode}";
-                }
 
                 string getAssetListQuery =
                     $@"
@@ -210,42 +228,14 @@ namespace DD_Locater_API.Services
             {
                 string condition = "";
 
-                condition += bld_type == "ftrstr" ? " AND (bld_type LIKE 'FACTORY%' OR bld_type = 'str')"
-                    : bld_type.Contains("FACTORY") ? $" AND bld_type = '{bld_type}'"
-                    : bld_type == "ONEROOM" ? " AND (bld_type = 'ONEROOM' OR bld_type = 'ONEROOM_SU')"
-                    : bld_type == "su" ? " AND (bld_type = 'su' OR bld_type = 'ONEROOM_SU')"
-                    : bld_type == "OR_SU_BOTH" ? " AND (bld_type = 'ONEROOM' OR bld_type = 'su' OR bld_type = 'ONEROOM_SU')"
-                    : $" AND bld_type LIKE '%{bld_type}%'";
+                condition = ConditionSetter.ByBldType(condition, bld_type);
+                condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
+                condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
+                condition = ConditionSetter.ByFactoryCount(condition, factory_count);
 
-                switch (hasName)
-                {
-                    case -1: condition += "AND (bld_name = '' OR bld_name = '(자동입력)') "; break;
-                    case 1: condition += "AND bld_name != '' AND bld_name != '(자동입력)' "; break;
-                }
-                switch (hasNumber)
-                {
-                    case -1: condition += "AND bld_tel_owner = '' "; break;
-                    case 1: condition += "AND bld_tel_owner != '' "; break;
-                }
-                switch (hasGwan)
-                {
-                    case -1: condition += "AND (bld_gwan = '' OR bld_gwan IS NULL) "; break;
-                    case 1: condition += "AND bld_gwan != '' AND bld_gwan IS NOT NULL "; break;
-                }
-
-                condition += fmlyMin >= 0 ? $" AND fmly_cnt >= {fmlyMin} " : "";
-                condition += fmlyMax >= 0 ? $" AND fmly_cnt <= {fmlyMax} " : "";
                 condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
                 condition += useaprDay.Trim() != "" ? $" AND useapr_day >= '{useaprDay}'" : "";
                 condition += visited <= -1 ? "" : $" AND visited = {visited}";
-                if (factory_count == 0)
-                {
-                    condition += " AND visited = 1 AND factory_count = 0";
-                }
-                if (factory_count > 0)
-                {
-                    condition += " AND visited = 1 AND factory_count > 0";
-                }
                 if (doCode.Length > 0)
                 {
                     condition += $" AND do_cd = {doCode}";

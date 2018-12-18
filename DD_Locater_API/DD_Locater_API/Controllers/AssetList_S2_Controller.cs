@@ -31,6 +31,19 @@ namespace DD_Locater_API.Controllers
                 getHdStr("mainPurps"), getHdStr("useaprDay"),
                 getHdInt("visited"), getHdInt("factory_count"), getHdStr("doCode", ""));
         }
+        [Route("api/assetList_mobile_S2")]
+        [HttpGet]
+        public List<AssetMark_S2> GetAssetListMobile()
+        {
+            return assetRepository.AssetsInBoundMobile(
+                getHdStr("bldCtgr"),
+                getHdStr("bldType").Replace("all", ""),
+                getHdDbl("left"), getHdDbl("right"), getHdDbl("top"), getHdDbl("bottom"),
+                getHdInt("hasName"), getHdInt("hasNumber"), getHdInt("hasGwan"),
+                getHdInt("fmlyMin"), getHdInt("fmlyMax"),
+                getHdStr("mainPurps"), getHdStr("useaprDay"),
+                getHdInt("visited"), getHdInt("factory_count"));
+        }
 
         [Route("api/assetRequested_S2")]
         [HttpGet]
