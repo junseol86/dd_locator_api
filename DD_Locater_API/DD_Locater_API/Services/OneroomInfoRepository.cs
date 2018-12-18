@@ -66,7 +66,6 @@ namespace DD_Locater_API.Services
                 }
             } else
             {
-                System.Diagnostics.Debug.WriteLine(ppt);
             }
             
         }
@@ -83,7 +82,6 @@ namespace DD_Locater_API.Services
                         AND PLAT_PLC LIKE '% {bunji.Split('\n')[0]}번지';
                 ";
 
-                System.Diagnostics.Debug.WriteLine(getBldQuery);
                 using (MySqlDataReader reader = exReader(getBldQuery, conn))
                 {
                     if (reader.Read())

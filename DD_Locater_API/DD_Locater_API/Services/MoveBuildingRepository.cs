@@ -24,9 +24,6 @@ namespace DD_Locater_API.Services
                         ;
                     ";
 
-                System.Diagnostics.Debug.WriteLine(getListQuery);
-
-
                 using (MySqlDataReader reader = exReader(getListQuery, conn))
                 {
                     while (reader.Read())

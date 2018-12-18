@@ -100,7 +100,7 @@ namespace DD_Locater_API.Services
 
         public List<AssetDongV2> DongsInBoundMobile(string bld_ctgr, string bld_type, double top, double bottom, double left, double right,
             Int64 hasName, Int64 hasNumber, Int64 hasGwan, Int64 fmlyMin, Int64 fmlyMax,
-            string mainPurps, string useAprDay, Int64 visited, Int64 factory_count)
+            string mainPurps, string useAprDay, Int64 visited, Int64 factory_count, Int64 floor_min)
         {
             List<AssetDongV2> result = new List<AssetDongV2>();
 
@@ -111,6 +111,7 @@ namespace DD_Locater_API.Services
             condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
             condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
             condition = ConditionSetter.ByFactoryCount(condition, factory_count);
+            condition = ConditionSetter.ByFloorCount(condition, floor_min);
 
             condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
             condition += useAprDay.Trim() != "" ? $" AND useapr_day >= '{useAprDay}'" : "";
@@ -134,8 +135,6 @@ namespace DD_Locater_API.Services
                         GROUP BY dongri_name
                         ORDER BY geo_lat
                     ";
-
-                System.Diagnostics.Debug.WriteLine(getAssetDongsQuery);
 
 
                 using (MySqlDataReader reader = exReader(getAssetDongsQuery, conn))

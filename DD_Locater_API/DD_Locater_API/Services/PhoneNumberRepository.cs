@@ -135,7 +135,6 @@ namespace DD_Locater_API.Services
                         VALUES
                         ('{pnBelong}', '{pnNumber.Trim()}');
                         ";
-                    System.Diagnostics.Debug.WriteLine(insertPhonenum);
                     exScalar(insertPhonenum, conn);
                 }
             }

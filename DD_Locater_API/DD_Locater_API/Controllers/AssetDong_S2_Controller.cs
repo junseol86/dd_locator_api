@@ -41,7 +41,7 @@ namespace DD_Locater_API.Controllers
                 getHdInt("hasName"), getHdInt("hasNumber"), getHdInt("hasGwan"),
                 getHdInt("fmlyMin"), getHdInt("fmlyMax"),
                 getHdStr("mainPurps"), getHdStr("useaprDay"),
-                getHdInt("visited"), getHdInt("factory_count"));
+                getHdInt("visited"), getHdInt("factory_count"), getHdInt("floor_min"));
         }
     }
 }

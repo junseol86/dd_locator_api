@@ -51,7 +51,6 @@ namespace DD_Locater_API.Controllers
                     }
                     catch
                     {
-                        System.Diagnostics.Debug.WriteLine(datum);
                     }
                 }
 
@@ -131,7 +130,6 @@ namespace DD_Locater_API.Controllers
                         buildingRepository.InsertFactory(cols);
                     } catch
                     {
-                        System.Diagnostics.Debug.WriteLine($"ERROR: ${lines[i]}");
                     }
                 }
             }

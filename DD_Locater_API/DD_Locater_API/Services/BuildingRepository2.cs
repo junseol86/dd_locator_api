@@ -421,7 +421,6 @@ namespace DD_Locater_API.Services
                                                 SET 
                                                     bld_on_parked = '{phone}'
                                                 WHERE bld_idx = {bldIdx}";
-                        System.Diagnostics.Debug.WriteLine(updateQuery);
                         exNonQuery(updateQuery, conn);
                     }
                     
@@ -444,7 +443,6 @@ namespace DD_Locater_API.Services
                                             AND main_purps_cd_nm LIKE '%제{which}종근린생활시설%'
                                             AND ETC_PURPS LIKE '{purps}%'
                                     ";
-                System.Diagnostics.Debug.WriteLine(updateQuery);
                 exNonQuery(updateQuery, conn);
             }
         }
@@ -462,7 +460,6 @@ namespace DD_Locater_API.Services
                                             AND main_purps_cd_nm LIKE '%제{which}종근린생활시설%'
                                             AND ETC_PURPS LIKE '%{purps}%'
                                     ";
-                System.Diagnostics.Debug.WriteLine(updateQuery);
                 exNonQuery(updateQuery, conn);
             }
         }
@@ -519,7 +516,6 @@ namespace DD_Locater_API.Services
                     SET dongri_name = '{dongRiName}'
                     WHERE SIGUNGU_CD = '{sgg}' AND BJDONG_CD = '{bjd}';
                 ";
-                System.Diagnostics.Debug.WriteLine(updateQuery);
                 exReader(updateQuery, conn);
             }
         }

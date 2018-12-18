@@ -7,7 +7,7 @@ namespace DD_Locater_API.Utils
         {
             string condition = con;
 
-            if (bld_ctgr != "0000")
+            if (bld_ctgr != "0000" && bld_ctgr != "1111")
             {
                 bool isFirst = true;
                 condition += " AND (";
@@ -92,6 +92,14 @@ namespace DD_Locater_API.Utils
             if (factory_count > 0)
             {
                 condition += " AND visited = 1 AND factory_count > 0";
+            }
+            return condition;
+        }
+        public static string ByFloorCount(string con, Int64 floor_min) {
+            string condition = con;
+            if (floor_min > 0)
+            {
+                condition += $" AND grnd_flr_cnt >= {floor_min}";
             }
             return condition;
         }

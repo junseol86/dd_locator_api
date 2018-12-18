@@ -321,7 +321,6 @@ namespace DD_Locater_API.Services
                             work_requested = {workRequested}
                         WHERE bld_idx = '{bldIdx}'        
                 ";
-                System.Diagnostics.Debug.WriteLine(modifyAssetQuery);
                 result = exNonQuery(modifyAssetQuery, conn);
             }
             return result;
@@ -351,7 +350,6 @@ namespace DD_Locater_API.Services
                             work_requested = {workRequested}
                         WHERE bld_idx = '{bldIdx}'        
                 ";
-                System.Diagnostics.Debug.WriteLine(modifyAssetQuery);
                 result = exNonQuery(modifyAssetQuery, conn);
             }
             return result;
