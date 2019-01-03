@@ -238,6 +238,12 @@
     <Compile Include="Utils\DBAuth.cs" />
     <Compile Include="Utils\DBFuncs.cs" />
     <Compile Include="Utils\ConditionSetter.cs" />
+    <Compile Include="Utils\QuerySetter.cs" />
+    <Compile Include="Models\AstStatOb.cs" />
+    <Compile Include="Models\AstStatObDown.cs" />
+    <Compile Include="Models\AstStatHs.cs" />
+    <Compile Include="Models\AstStatHsDown.cs" />
+    <Compile Include="Services\AssetStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -338,7 +344,7 @@
     </VisualStudio>
     <MonoDevelop>
       <Properties>
-        <XspParameters Port="8080" Address="172.30.1.54" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8080" Address="172.30.1.31" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>

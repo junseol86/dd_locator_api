@@ -24,6 +24,7 @@ namespace DD_Locater_API.Models
         public Int16 visited;
         public Int16 has_factory_tel;
         public Int16 factory_count;
+        public string date_research;
         public Int64 asset_count;
 
         public AssetMark_S2(MySqlDataReader reader)
@@ -43,6 +44,7 @@ namespace DD_Locater_API.Models
             work_request = reader["work_request"].ToString();
             visited = Convert.ToInt16(reader["visited"].ToString());
             factory_count = Convert.ToInt16(reader["factory_count"].ToString());
+            date_research = reader["date_research"].ToString();
         }
     }
 

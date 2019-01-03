@@ -42,7 +42,10 @@ namespace DD_Locater_API.Controllers
                 getHdInt("hasName"), getHdInt("hasNumber"), getHdInt("hasGwan"),
                 getHdInt("fmlyMin"), getHdInt("fmlyMax"),
                 getHdStr("mainPurps"), getHdStr("useaprDay"),
-                getHdInt("visited"), getHdInt("factory_count"), getHdInt("floor_min"));
+                getHdInt("visited"), getHdInt("factory_count"), getHdInt("floor_min"),
+                getHdInt("hasGongsil"), getHdInt("hasHosuPic"), 
+                getHdInt("approvedPic"), getHdInt("hasAgency"), getHdInt("smsNotSent")
+            );
         }
 
         [Route("api/assetRequested_S2")]
@@ -70,8 +73,6 @@ namespace DD_Locater_API.Controllers
                 getHdInt("visited"), getHdInt("factory_count"), getHdStr("doCode", "")
                 );
         }
-
-                // System.Web.HttpUtility.UrlDecode(getHdStr("searchName")), 
     }
 
 }

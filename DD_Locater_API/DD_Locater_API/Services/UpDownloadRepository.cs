@@ -16,12 +16,12 @@ namespace DD_Locater_API.Services
             using (MySqlConnection conn = openCon())
             {
                 string insertQuery = $@"
-                    UPDATE dd_locator_bld
+                    UPDATE aa_dd_locator_bld
                     SET
                         photo = '{fileName}'
                     WHERE bld_idx = '{bldIdx}';
 
-                    SELECT photo FROM dd_locator_bld
+                    SELECT photo FROM aa_dd_locator_bld
                     WHERE bld_idx = '{bldIdx}';
                 ";
 
@@ -44,12 +44,12 @@ namespace DD_Locater_API.Services
             using (MySqlConnection conn = openCon())
             {
                 string deleteQuery = $@"
-                    UPDATE dd_locator_bld
+                    UPDATE aa_dd_locator_bld
                     SET
                         photo = ''
                     WHERE bld_idx = '{bldIdx}';
 
-                    SELECT photo FROM dd_locator_bld
+                    SELECT photo FROM aa_dd_locator_bld
                     WHERE bld_idx = '{bldIdx}';
                 ";
 

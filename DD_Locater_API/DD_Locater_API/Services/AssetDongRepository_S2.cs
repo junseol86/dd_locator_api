@@ -24,10 +24,10 @@ namespace DD_Locater_API.Services
 
             string condition = "";
 
-            condition = ConditionSetter.ByBldType(condition, bld_type);
-            condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
-            condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
-            condition = ConditionSetter.ByFactoryCount(condition, factory_count);
+            condition = ConditionSetter.ByBldType(condition, "", bld_type);
+            condition = ConditionSetter.ByNameNumberGwan(condition, "", hasName, hasNumber, hasGwan);
+            condition = ConditionSetter.ByFamilyMinMax(condition, "", fmlyMin, fmlyMax);
+            condition = ConditionSetter.ByFactoryCount(condition, "", factory_count);
 
             condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
             condition += useAprDay.Trim() != "" ? $" AND useapr_day >= '{useAprDay}'" : "";
@@ -98,44 +98,37 @@ namespace DD_Locater_API.Services
         }
 
 
-        public List<AssetDongV2> DongsInBoundMobile(string bld_ctgr, string bld_type, double top, double bottom, double left, double right,
+        public List<AssetDongV2> DongsInBoundMobile(string bld_ctgr, string bld_type, double left, double right, double top, double bottom,
             Int64 hasName, Int64 hasNumber, Int64 hasGwan, Int64 fmlyMin, Int64 fmlyMax,
-            string mainPurps, string useAprDay, Int64 visited, Int64 factory_count, Int64 floor_min)
+            string mainPurps, string useAprDay, Int64 visited, Int64 factory_count, Int64 floor_min,
+            Int64 hasGongsil, Int64 hasHosuPic, Int64 approvedPic, Int64 hasAgency, Int64 smsNotSent
+            )
         {
             List<AssetDongV2> result = new List<AssetDongV2>();
 
             string condition = "";
 
-            condition = ConditionSetter.ByBldCtgr(condition, bld_ctgr);
-            condition = ConditionSetter.ByBldType(condition, bld_type);
-            condition = ConditionSetter.ByNameNumberGwan(condition, hasName, hasNumber, hasGwan);
-            condition = ConditionSetter.ByFamilyMinMax(condition, fmlyMin, fmlyMax);
-            condition = ConditionSetter.ByFactoryCount(condition, factory_count);
-            condition = ConditionSetter.ByFloorCount(condition, floor_min);
+            condition = ConditionSetter.ByBound(condition, "`nat`.", left, right, top, bottom);
+            condition = ConditionSetter.ByBldCtgr(condition, "`nat`.", bld_ctgr);
+            condition = ConditionSetter.ByBldType(condition, "`loc`.", bld_type);
+            condition = ConditionSetter.ByNameNumberGwan(condition, "`loc`.", hasName, hasNumber, hasGwan);
+            condition = ConditionSetter.ByFamilyMinMax(condition, "`loc`.", fmlyMin, fmlyMax);
+            condition = ConditionSetter.ByFactoryCount(condition, "`loc`.", factory_count);
+            condition = ConditionSetter.ByFloorCount(condition, "`nat`.", floor_min);
+            condition = ConditionSetter.ByApprovePic(condition, "`ob`.", approvedPic);
+            condition = ConditionSetter.ByAgency(condition, "`ob`.", hasAgency);
+            condition = ConditionSetter.BySms(condition, "`ob`.", smsNotSent);
 
-            condition += $" AND main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
-            condition += useAprDay.Trim() != "" ? $" AND useapr_day >= '{useAprDay}'" : "";
-            condition += visited <= -1 ? "" : $" AND visited = {visited}";
+            condition += $" AND `nat`.main_purps_cd_nm LIKE '%{System.Web.HttpUtility.UrlDecode(mainPurps)}%'";
+            condition += useAprDay.Trim() != "" ? $" AND `nat`.useapr_day >= '{useAprDay}'" : "";
+            condition += visited <= -1 ? "" : $" AND `loc`.visited = {visited}";
 
             using (MySqlConnection conn = openCon())
             {
 
-                string getAssetDongsQuery =
-                    $@"
-                        SELECT 
-                            dongri_name,
-                            AVG(CAST(geo_lng AS DECIMAL(11,7))) AS geo_lng, AVG(CAST(geo_lat AS DECIMAL(11,7))) as geo_lat, 
-                            COUNT(BJDONG_CD) as asset_count FROM view_locatorforsearch
-                        WHERE 
-                            geo_lng > '{top}'
-                            AND geo_lng < '{bottom}'
-                            AND geo_lat < '{left}'
-                            AND geo_lat > '{right}'
-                            {condition}
-                        GROUP BY dongri_name
-                        ORDER BY geo_lat
-                    ";
+                string getAssetDongsQuery = QuerySetter.SetDongsQuery(condition, hasGongsil, hasHosuPic);
 
+                System.Diagnostics.Debug.WriteLine(getAssetDongsQuery);
 
                 using (MySqlDataReader reader = exReader(getAssetDongsQuery, conn))
                 {

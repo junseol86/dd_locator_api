@@ -13,10 +13,12 @@ namespace DD_Locater_API.Controllers
     public class Asset_S2_Controller : CustomController
     {
         private AssetRepository_S2 assetRepository;
+        private AssetStatusRepository assetStatusRepository;
 
         public Asset_S2_Controller()
         {
             this.assetRepository = new AssetRepository_S2();
+            this.assetStatusRepository = new AssetStatusRepository();
         }
 
         [Route("api/asset_S2/{baseIdx}")]
@@ -26,12 +28,19 @@ namespace DD_Locater_API.Controllers
             return assetRepository.GetAnAsset(baseIdx);
         }
 
-        //[Route("api/asset/insertV2")]
-        //[HttpPost]
-        //public Int64 InsertSimple([FromBody] AssetV2 asset)
-        //{
-        //    return assetRepositoryV2.InsertAssetV2(asset);
-        //}
+        [Route("api/asset_S2/status/hs/{baseIdx}")]
+        [HttpGet]
+        public List<AstStatHsDown> GetAssetStatusHs(Int64 baseIdx)
+        {
+            return assetStatusRepository.GetAssetStatusHs(baseIdx);
+        }
+
+        [Route("api/asset_S2/status/ob/{baseIdx}")]
+        [HttpGet]
+        public AstStatObDown GetAssetStatusOb(Int64 baseIdx)
+        {
+            return assetStatusRepository.GetAssetStatusOb(baseIdx);
+        }
 
         [Route("api/asset/modify_S2")]
         [HttpPut]
@@ -40,18 +49,25 @@ namespace DD_Locater_API.Controllers
             return assetRepository.ModifyAsset(asset, getHdStr("bld_idx"));
         }
 
-        //[Route("api/asset/modifyV3")]
-        //[HttpPut]
-        //public Int64 ModifyAsset3([FromBody] AssetV2 asset)
-        //{
-        //    return assetRepositoryV2.ModifyAsset2(asset, getHdStr("bld_idx"));
-        //}
+        [Route("api/asset/status/update_date")]
+        [HttpPut]
+        public Int64 UpdateStatusDateResearch()
+        {
+            return assetStatusRepository.updateResearchDate(getHdStr("orm_bd_idx"));
+        }
 
-        //[Route("api/asset/deleteV2")]
-        //[HttpDelete]
-        //public Int64 deleteAssetV2()
-        //{
-        //    return assetRepositoryV2.DeleteAssetV2(getHdStr("bld_idx"));
-        //}
+        [Route("api/asset/status/modify_ob")]
+        [HttpPut]
+        public Int64 ModifyAstStatusOb([FromBody] AstStatOb ob)
+        {
+            return assetStatusRepository.modifyOb(ob);
+        }
+
+        [Route("api/asset/status/modify_hs")]
+        [HttpPut]
+        public Int64 ModifyAstStatusOb([FromBody] AstStatHs hs)
+        {
+            return assetStatusRepository.modifyHs(hs);
+        }
     }
 }
