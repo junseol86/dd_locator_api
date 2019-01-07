@@ -20,6 +20,7 @@ namespace DD_Locater_API.Models
             pwd_building = reader["pwd_building"].ToString();
             picture_agree = reader["picture_agree"].ToString();
             date_research = reader["date_research"].ToString();
+            bd_pic_count = reader["bd_pic_count"].ToString();
         }
     }
 }

@@ -35,6 +35,7 @@ namespace DD_Locater_API.Services
             using (MySqlConnection conn = openCon())
             {
                 string getAstStatObQuery = QuerySetter.SetAstStatObQuery(_bldIdx);
+                System.Diagnostics.Debug.WriteLine(getAstStatObQuery);
                 using (MySqlDataReader reader = exReader(getAstStatObQuery, conn))
                 {
                     if (reader.Read())

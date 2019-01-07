@@ -15,5 +15,6 @@ namespace DD_Locater_API.Models
         public string pwd_building { get; set; }
         public string picture_agree { get; set; }
         public string date_research { get; set; }
+        public string bd_pic_count { get; set; }
     }
 }

@@ -129,7 +129,8 @@ namespace DD_Locater_API.Utils
                           `ob`.`memo`              AS `memo`,
                           `ob`.`pwd_building`      AS `pwd_building`,
                           `ob`.`picture_agree`     AS `picture_agree`,
-                          `ob`.`date_research`     AS `date_research`
+                          `ob`.`date_research`     AS `date_research`,
+                          COUNT(`bp`.`meta_bd_pic_idx`)            AS `bd_pic_count`
                         FROM (`aa_aa_dd_meta_building_nation` `nat`
                            JOIN (`aa_dd_locator_bld` `loc`
                                     LEFT JOIN `aa_aa_dd_meta_building` `mb`
@@ -138,7 +139,10 @@ namespace DD_Locater_API.Utils
                                      ON (`mb`.`bd_gubun_deprecated` = 'ONEROOM'
                                           AND `mb`.`meta_bd_idx` = `ob`.`meta_bd_idx`)
                         ) ON (`nat`.`bd_nation_idx` = `loc`.`bd_nation_idx`))
-                        WHERE bld_idx = {bld_idx};
+                          LEFT JOIN `aa_aa_dd_meta_building_picture` `bp`
+                          ON (`mb`.`meta_bd_idx` = `bp`.`meta_bd_idx`)
+                        WHERE bld_idx = {bld_idx}
+                        GROUP BY `loc`.bld_idx;
                     ";
         }
 
